@@ -1,52 +1,38 @@
-#pragma once
-#include <stdexcept>
-#define ll long long
-template <typename T>
+#include "clsStack.h"
+#include <iostream>
 
-class clsStack
-{
-private:
-	ll size;
-	ll capacity;
-	T* array;
-	static ll defult_capacity() { return 64; }
-
-	void resize(ll newcap)
-	{
-		T* newarray = new T[newcap];
-		for (ll i = 0; i < size; ++i) newarray[i] = array[i];
-		delete[]array;
-		array = newarray;
-		capacity = newcap;
-	}
-public:
-	clsStack() :capacity(defult_capacity()), size(0), array(new T[capacity]) {}
-	~clsStack() { delete []array; }
-
-	void push(T value)
-	{
-		if (size == capacity) resize(capacity * 2);
-		array[size] = value;
-		size++;
-	}
-	bool pop()
-	{
-		if (size == 0)return false;
-			size--;
-		return true;
-	}
-	const T& Top()const
-	{
-		if (size == 0) throw std::out_of_range("-1");
-		return array[size - 1];
-	}
-	T& Top()
-	{
-		if (size == 0) throw std::out_of_range("-1");
-		return array[size - 1];
-	}
-
-	ll Size() const{ return size; }
-	bool Empty() const{ return size == 0; }
-	void clear(){ size = 0; }
-};
+int main() {
+    // 🔢 Stack with integers
+    clsStack<int> numbers;
+    
+    // Push elements onto the stack
+    numbers.push(10);
+    numbers.push(20);
+    numbers.push(30);
+    
+    std::cout << "Top: " << numbers.Top() << std::endl;   // 30
+    std::cout << "Size: " << numbers.Size() << std::endl; // 3
+    
+    // Pop element from top
+    numbers.pop();
+    std::cout << "After pop, Top: " << numbers.Top() << std::endl; // 20
+    
+    // Check if empty
+    if (!numbers.Empty()) {
+        std::cout << "Stack is not empty!" << std::endl;
+    }
+    
+    // 📝 Stack with strings
+    clsStack<std::string> names;
+    names.push("Alice");
+    names.push("Bob");
+    names.push("Charlie");
+    
+    std::cout << "Top name: " << names.Top() << std::endl; // Charlie
+    
+    // Clear all elements
+    names.clear();
+    std::cout << "After clear, Empty: " << names.Empty() << std::endl; // 1 (true)
+    
+    return 0;
+}
